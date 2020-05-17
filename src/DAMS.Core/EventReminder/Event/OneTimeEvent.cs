@@ -8,7 +8,7 @@ namespace DAMS.EventReminder.Event
     class OneTimeEvent : IEvent
     {
         public DateTime Date { get; set; }
-        public DateTime NextNotificationDate { get; set; }
+        public DateTime NextNotificationDate { get { return Date - NotifyBefore; } }
         public string Name { get; set; }
         public TimeSpan NotifyBefore { get; set; }
         public INotifier Notifier { get; set; }
@@ -18,10 +18,20 @@ namespace DAMS.EventReminder.Event
         public OneTimeEvent(INotifier notifier, DateTime date)
         {
             Notifier = notifier;
-            Status = EventStatus.Active;
             Date = date;
-        }
+            Name = "My Event";
+            NotifyBefore = new TimeSpan(0, 5, 0);
+            Status = EventStatus.Active;
 
+        }
+        public OneTimeEvent(INotifier notifier, DateTime date, string name, TimeSpan time, EventStatus status)
+        {
+            Notifier = notifier;
+            Date = date;
+            Name = name;
+            NotifyBefore = time;
+            Status = status;
+        }
 
         public void Notify()
         {
