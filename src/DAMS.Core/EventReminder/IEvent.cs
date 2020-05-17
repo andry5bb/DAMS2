@@ -6,7 +6,7 @@ namespace DAMS.EventReminder
 {
     public interface IEvent
     {
-        DateTime NextNotificationDate { get; set; }
+        DateTime NextNotificationDate { get;  }
         string Name { get; set; }
         TimeSpan NotifyBefore { get; set; }
         INotifier Notifier { get; set; }
