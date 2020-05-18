@@ -20,6 +20,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="EventReminder\Scheduler\" />
+    <Folder Include="EventReminder\Event\" />
+    <Folder Include="EventReminder\Notifier\" />
     <Folder Include="Users\" />
   </ItemGroup>
 </Project>
