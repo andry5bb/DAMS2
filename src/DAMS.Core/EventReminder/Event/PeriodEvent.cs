@@ -25,6 +25,31 @@ namespace DAMS.EventReminder.Event
             NotifyBefore = new TimeSpan(0, 5, 0);
             Status = EventStatus.Active;
         }
+        public PeriodEvent(INotifier notifier, DateTime date, string name, TimeSpan time, EventStatus status)
+        {
+            Notifier = notifier;
+            Date = date;
+            Name = name;
+            NotifyBefore = time;
+            Status = status;
+        }
+        public void Notify()
+        {
+            Notifier.Notify();
+        }
+
+        public void UpdateStatus(NotificationResult result)
+        {
+            if (result.IsSuccess == true)
+            {
+                Status = EventStatus.Closed;
+            }
+            if (result.IsSuccess == false)
+            {
+                Status = EventStatus.Failed;
+            }
+        }
+
         private DateTime GetNextNotificationDate()
         {
             DateTime NextDate = Date;
@@ -93,30 +118,6 @@ namespace DAMS.EventReminder.Event
                 }
             }
             return NextDate;
-        }
-        public PeriodEvent(INotifier notifier, DateTime date, string name, TimeSpan time, EventStatus status)
-        {
-            Notifier = notifier;
-            Date = date;
-            Name = name;
-            NotifyBefore = time;
-            Status = status;
-        }
-        public void Notify()
-        {
-            Notifier.Notify();
-        }
-
-        public void UpdateStatus(NotificationResult result)
-        {
-            if (result.IsSuccess == true)
-            {
-                Status = EventStatus.Closed;
-            }
-            if (result.IsSuccess == false)
-            {
-                Status = EventStatus.Failed;
-            }
         }
     }
 }
