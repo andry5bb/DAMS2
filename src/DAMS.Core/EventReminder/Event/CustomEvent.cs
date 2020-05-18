@@ -33,7 +33,6 @@ namespace DAMS.EventReminder
         public CustomEvent(INotifier notifier, IEnumerable<DateTime> dates)
         {
             Notifier = notifier;
-            Status = EventStatus.Active;
             Dates = dates.ToDictionary((current) => current, (current) => EventStatus.Active);
             Name = "My Event";
             NotifyBefore = new TimeSpan(0, 5, 0);
@@ -43,7 +42,6 @@ namespace DAMS.EventReminder
         public CustomEvent(INotifier notifier, IEnumerable<DateTime> dates, string name, TimeSpan time, EventStatus status)
         {
             Notifier = notifier;
-            Status = EventStatus.Active;
             Dates = dates.ToDictionary((current) => current, (current) => EventStatus.Active);
             Name = name;
             NotifyBefore = time;
