@@ -3,6 +3,7 @@
     public class BucketNotifier :  IBucketNotifier
     {       
         public void NotifyForAll(NotificationBucket notificationBucket) 
+        {
             foreach(var item in notificationBucket.NextEvents)
             {
                 item.Notify();
