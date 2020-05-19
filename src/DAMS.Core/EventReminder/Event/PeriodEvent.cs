@@ -1,11 +1,9 @@
 ﻿using DAMS.EventReminder.Notifier;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DAMS.EventReminder.Event
 {
-    class PeriodEvent : IEvent
+    public class PeriodEvent : IEvent
     {
         public DateTime Date { get; set; }
         public PeriodType PeriodType { get; set; }
@@ -40,11 +38,11 @@ namespace DAMS.EventReminder.Event
 
         public void UpdateStatus(NotificationResult result)
         {
-            if (result.IsSuccess == true)
+            if (result.IsSuccess)
             {
                 Status = EventStatus.Closed;
             }
-            if (result.IsSuccess == false)
+            if (!result.IsSuccess)
             {
                 Status = EventStatus.Failed;
             }
