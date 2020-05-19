@@ -5,7 +5,6 @@ namespace DAMS.EventReminder
 {
    public interface IScheduler
     {
-       public NotificationBucket PrepareNotificationBucket(IEnumerable<IEvent> events);
-        
+       public NotificationBucket PrepareNotificationBucket(IEnumerable<IEvent> events);        
     }
 }

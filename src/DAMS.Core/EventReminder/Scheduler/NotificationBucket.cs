@@ -11,10 +11,5 @@ namespace DAMS.EventReminder.Scheduler
         {
             throw new NotImplementedException();
         }
-
-        //public NotificationBucket (IEnumerable<IEvent> nextEvent)
-        //{
-        //    NextEvents = nextEvent;
-        //}
     }
 }

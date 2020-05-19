@@ -12,15 +12,14 @@ namespace DAMS.EventReminder.Scheduler
 
             foreach (var currentEvent in events)
             {
-                TimeSpan left = currentEvent.NextNotificationDate - now;               
+                TimeSpan left = currentEvent.NextNotificationDate - now;
                 if (left.Minutes < 5 && left.Minutes >= 0)
                 {
-                     bucket.Add(currentEvent);                  
+                 bucket.Add(currentEvent);
                 }
-            }           
+            }
                  return bucket;
       }
-
     }
 }
 
