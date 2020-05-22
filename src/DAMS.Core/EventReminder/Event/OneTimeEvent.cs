@@ -1,7 +1,5 @@
 ﻿using DAMS.EventReminder.Notifier;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DAMS.EventReminder.Event
 {
@@ -32,6 +30,7 @@ namespace DAMS.EventReminder.Event
             NotifyBefore = time;
             Status = status;
         }
+
 
         public void Notify()
         {

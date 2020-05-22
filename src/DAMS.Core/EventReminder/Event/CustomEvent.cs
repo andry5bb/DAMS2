@@ -3,8 +3,6 @@ using DAMS.EventReminder.Notifier;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-
 
 namespace DAMS.EventReminder
 {
@@ -30,6 +28,7 @@ namespace DAMS.EventReminder
         public INotifier Notifier { get; set; }
         public static EventStatus Status { get; set; }
 
+
         public CustomEvent(INotifier notifier, IEnumerable<DateTime> dates)
         {
             Notifier = notifier;
@@ -47,6 +46,7 @@ namespace DAMS.EventReminder
             NotifyBefore = time;
             Status = status;
         }
+
 
         public void Notify()
         {

@@ -23,6 +23,7 @@ namespace DAMS.EventReminder.Event
             NotifyBefore = new TimeSpan(0, 5, 0);
             Status = EventStatus.Active;
         }
+
         public PeriodEvent(INotifier notifier, DateTime date, string name, TimeSpan time, EventStatus status)
         {
             Notifier = notifier;
@@ -31,6 +32,8 @@ namespace DAMS.EventReminder.Event
             NotifyBefore = time;
             Status = status;
         }
+
+
         public void Notify()
         {
             Notifier.Notify();
