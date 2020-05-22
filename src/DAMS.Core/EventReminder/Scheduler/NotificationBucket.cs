@@ -1,15 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DAMS.EventReminder.Scheduler
 {
     public class NotificationBucket
     {
-        public IEnumerable<IEvent> NextEvents { get; set; }
+        public List<IEvent> NextEvents { get; set; }
 
-        internal void Add(IEvent currentEvent)
+        public IEnumerable<IEvent> Remove(IEnumerable<IEvent> @event)
         {
-            throw new NotImplementedException();
+            var testEv = @event.ToList<IEvent>();
+            foreach (var item in testEv)
+            {
+                if (item.Status == Event.EventStatus.Closed)
+                {
+                    testEv.Remove(item);
+                }
+            }
+            return testEv;
         }
     }
 }

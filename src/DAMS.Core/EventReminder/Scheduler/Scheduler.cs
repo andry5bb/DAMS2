@@ -1,25 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DAMS.EventReminder.Scheduler
 {
     public class Scheduler: IScheduler
-    { 
-      public NotificationBucket PrepareNotificationBucket(IEnumerable<IEvent> events)
-      {
+    {
+        public NotificationBucket PrepareNotificationBucket(IEnumerable<IEvent> events)
+        {
             var now = DateTime.Now;
-            NotificationBucket bucket = new NotificationBucket();
+            var bucket = new NotificationBucket();
 
             foreach (var currentEvent in events)
             {
                 TimeSpan left = currentEvent.NextNotificationDate - now;
-                if (left.Minutes < 5 && left.Minutes >= 0)
+                if (left.Minutes < 5 && left.Minutes >= 0 )
                 {
-                 bucket.Add(currentEvent);
+                    bucket.NextEvents.Add(currentEvent);
                 }
+                bucket.Remove(events);
             }
-                 return bucket;
-      }
+            return bucket;
+        }
     }
 }
-
