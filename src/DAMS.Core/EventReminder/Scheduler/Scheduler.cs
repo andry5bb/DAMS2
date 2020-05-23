@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace DAMS.EventReminder.Scheduler
 {
@@ -16,9 +15,8 @@ namespace DAMS.EventReminder.Scheduler
                 TimeSpan left = currentEvent.NextNotificationDate - now;
                 if (left.Minutes < 5 && left.Minutes >= 0 )
                 {
-                    bucket.NextEvents.Add(currentEvent);
+                    bucket.Add(currentEvent);
                 }
-                bucket.Remove(events);
             }
             return bucket;
         }
