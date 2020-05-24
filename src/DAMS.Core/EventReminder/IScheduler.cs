@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using DAMS.EventReminder.Scheduler;
+using System.Collections.Generic;
 
 namespace DAMS.EventReminder
 {
    public interface IScheduler
     {
-        List<IEvent> PrepareNotificationBucket(IEnumerable<IEvent> events); 
+       public NotificationBucket PrepareNotificationBucket(IEnumerable<IEvent> events);        
     }
 }
