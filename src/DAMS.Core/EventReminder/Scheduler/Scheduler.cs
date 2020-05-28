@@ -8,12 +8,12 @@ namespace DAMS.EventReminder.Scheduler
         public NotificationBucket PrepareNotificationBucket(IEnumerable<IEvent> events)
         {
             var now = DateTime.Now;
-            var bucket = new NotificationBucket();
+            var bucket = new NotificationBucket(events);
 
             foreach (var currentEvent in events)
             {
                 TimeSpan left = currentEvent.NextNotificationDate - now;
-                if (left.Minutes < 5 && left.Minutes >= 0 )
+                if (left.Minutes < 5 && left.Minutes >= 0)
                 {
                     bucket.Add(currentEvent);
                 }
