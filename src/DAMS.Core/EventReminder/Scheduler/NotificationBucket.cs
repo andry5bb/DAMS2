@@ -11,7 +11,11 @@ namespace DAMS.EventReminder.Scheduler
 
         public NotificationBucket(IEnumerable<IEvent> events)
         {
-            events = _events;
+            _events = new List<IEvent>(events); 
+        }
+        public NotificationBucket()
+        {
+
         }
 
 

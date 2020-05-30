@@ -1,6 +1,6 @@
 ﻿namespace DAMS.EventReminder.Scheduler
 {
-    public class BucketNotifier :  IBucketNotifier
+    public class BucketNotifier : IBucketNotifier
     {
         public void NotifyForAll(NotificationBucket notificationBucket) 
         {
@@ -10,7 +10,7 @@
                 PostProcessNotification(item);
             }
         }
-        private void PostProcessNotification(IEvent eventas) 
+        private void PostProcessNotification(IEvent eventas)
         {
         }
     }
