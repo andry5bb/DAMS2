@@ -33,14 +33,14 @@ namespace DAMS.Core.Tests.EventReminder.Scheduler
             // Arrange
             var events = new List<IEvent>()
             {
-                new OneTimeEvent (_notifier,DateTime.Now.AddMinutes(10).AddSeconds(60)),
-                new OneTimeEvent (_notifier,DateTime.Now.AddMinutes(15).AddSeconds(50)),
-                new OneTimeEvent (_notifier,DateTime.Now.AddMinutes(4).AddSeconds(40)),
+              new OneTimeEvent (_notifier,new DateTime(2020,05,30,14,17,00)),
+              new OneTimeEvent (_notifier,new DateTime(2020,05,30,23,10,10)),
             };
+           // public NotificationBucket result => results as List<IEvent>;
 
             //Act 
             NotificationBucket result = Scheduler.PrepareNotificationBucket(events);
-
+            
             //Assert
             result.Should().NotBeNull();
             result.NextEvents.Should().HaveCount(1);
