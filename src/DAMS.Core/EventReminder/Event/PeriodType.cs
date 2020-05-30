@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DAMS.EventReminder.Event
+﻿namespace DAMS.EventReminder.Event
 {
     public enum PeriodType
     {

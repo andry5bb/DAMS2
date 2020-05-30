@@ -5,12 +5,13 @@ namespace DAMS.EventReminder.Event
 {
     public class PeriodEvent : IEvent
     {
+        private INotifier Notifier;
+
         public DateTime Date { get; set; }
         public PeriodType PeriodType { get; set; }
         public DateTime NextNotificationDate { get { return GetNextNotificationDate(); } }
         public string Name { get; set; }
-        public TimeSpan NotifyBefore { get; set; }
-        public INotifier Notifier { get; set; }
+        public TimeSpan NotifyBefore { get; set; }        
         public EventStatus Status { get; set; }
 
 
@@ -23,6 +24,7 @@ namespace DAMS.EventReminder.Event
             NotifyBefore = new TimeSpan(0, 5, 0);
             Status = EventStatus.Active;
         }
+
         public PeriodEvent(INotifier notifier, DateTime date, string name, TimeSpan time, EventStatus status)
         {
             Notifier = notifier;
@@ -31,9 +33,11 @@ namespace DAMS.EventReminder.Event
             NotifyBefore = time;
             Status = status;
         }
+
+
         public void Notify()
         {
-            Notifier.Notify();
+            UpdateStatus(Notifier.Notify());
         }
 
         public void UpdateStatus(NotificationResult result)

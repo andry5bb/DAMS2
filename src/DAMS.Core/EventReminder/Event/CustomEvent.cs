@@ -3,13 +3,13 @@ using DAMS.EventReminder.Notifier;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-
 
 namespace DAMS.EventReminder
 {
     public class CustomEvent : IEvent
     {
+        private INotifier Notifier;
+
         public IDictionary<DateTime, EventStatus> Dates { get; set; }
         public DateTime NextNotificationDate
         {
@@ -26,9 +26,9 @@ namespace DAMS.EventReminder
             }
         }
         public string Name { get; set; }
-        public TimeSpan NotifyBefore { get; set; }
-        public INotifier Notifier { get; set; }
-        public static EventStatus Status { get; set; }
+        public TimeSpan NotifyBefore { get; set; }        
+        public EventStatus Status { get; set; }
+
 
         public CustomEvent(INotifier notifier, IEnumerable<DateTime> dates)
         {
@@ -48,9 +48,10 @@ namespace DAMS.EventReminder
             Status = status;
         }
 
+
         public void Notify()
         {
-            Notifier.Notify();
+            UpdateStatus(Notifier.Notify());
         }
 
         public void UpdateStatus(NotificationResult result)
