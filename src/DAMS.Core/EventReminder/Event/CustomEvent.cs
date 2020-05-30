@@ -6,6 +6,9 @@ using System.Linq;
 
 namespace DAMS.EventReminder
 {
+    // TODO: Refactor: extract logic responsible for calculation of the next event date to private method.
+    //       Use this method wherever it could be used.
+
     public class CustomEvent : IEvent
     {
         private INotifier Notifier;
@@ -51,7 +54,13 @@ namespace DAMS.EventReminder
 
         public void Notify()
         {
-            UpdateStatus(Notifier.Notify());
+            // Remove following line after GetNextEventDate() will be implemented.
+            //DateTime nextEventDate = Dates.First(d => d.Value == EventStatus.Active).Key;
+            DateTime nextEventDate = GetNextEventDate();
+
+            var eventInfo = new EventInfo(Name, nextEventDate);
+            NotificationResult notificationResult = Notifier.Notify(eventInfo);
+            UpdateStatus(notificationResult);
         }
 
         public void UpdateStatus(NotificationResult result)
@@ -71,7 +80,11 @@ namespace DAMS.EventReminder
                     break;
                 }
             }
+        }
 
+        private DateTime GetNextEventDate()
+        {
+            throw new NotImplementedException();
         }
     }
 }
