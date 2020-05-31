@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Viber\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\src\DAMS.Core\DAMS.Core.csproj" />
+  </ItemGroup>
+
+</Project>
