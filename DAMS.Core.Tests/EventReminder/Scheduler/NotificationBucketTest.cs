@@ -10,16 +10,18 @@ namespace DAMS.Core.Tests.EventReminder.Scheduler
 {
     class NotificationBucketTest
     {
+        /// <summary>
+        /// System under test
+        /// </summary>
+
         public NotificationBucket NotificationBucketInstance { get; set; }
 
         private INotifier _notifier;
-        private DateTime _eventDate;
-        private IEnumerable<IEvent> events;
 
         #region Add()
 
         [Test]
-        public void Check_Method_Add_in_NotificationBucket()
+        public void Add_should_add_new_event()
         {
             //Arrang створюються змінні для того щоб виконати тестування
             var events = new List<IEvent>()
@@ -31,22 +33,21 @@ namespace DAMS.Core.Tests.EventReminder.Scheduler
             };
             NotificationBucketInstance = new NotificationBucket(events);
 
-            var evented = new OneTimeEvent(_notifier, DateTime.Now.AddMinutes(10).AddSeconds(60));
+            var newEvent = new OneTimeEvent(_notifier, DateTime.Now.AddMinutes(10).AddSeconds(60));
 
-            //Act виконуються определенние действия над системой           
-            NotificationBucketInstance.Add(evented);
-
+            //Act виконуються определенние действия над системой
+            NotificationBucketInstance.Add(newEvent);
 
             //Assert очікуваний результат
             NotificationBucketInstance.Should().NotBeNull();
             NotificationBucketInstance.NextEvents.Should().HaveCount(5);
-
+            NotificationBucketInstance.NextEvents.Should().Contain(events);
         }
 
         #endregion
         #region Remove()
         [Test]
-        public void Check_Method_Remove_in_NotificationBucket()
+        public void Remove_should_remove_old_event()
         {
             //Arrang створюються змінні для того щоб виконати тестування
             var eventTest = new OneTimeEvent(_notifier, new DateTime(2000, 12, 10));
@@ -57,16 +58,14 @@ namespace DAMS.Core.Tests.EventReminder.Scheduler
                 new OneTimeEvent (_notifier, DateTime.Now.AddMinutes(15).AddSeconds(50)),
             };
             NotificationBucketInstance = new NotificationBucket(events);
-           
 
-            //Act виконуються определенние действия над системой           
+            //Act виконуються визначенні дії над системой
             NotificationBucketInstance.Remove(eventTest);
-
 
             //Assert очікуваний результат
             NotificationBucketInstance.Should().NotBeNull();
             NotificationBucketInstance.NextEvents.Should().HaveCount(2);
-
+            NotificationBucketInstance.NextEvents.Should().NotContain(eventTest);
         }
     }
     #endregion

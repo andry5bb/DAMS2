@@ -14,6 +14,10 @@ namespace DAMS.Core.Tests.EventReminder.Scheduler
 {
     class BucketNotifierTest
     {
+        /// <summary>
+        /// System under test
+        /// </summary>
+
         public BucketNotifier BucketNotifierInstance { get; set; }
 
         private INotifier _notifier;
@@ -22,13 +26,13 @@ namespace DAMS.Core.Tests.EventReminder.Scheduler
         [SetUp]
         public void Setup()
         {
-            _notifier = Substitute.For<INotifier>();   // Here is mock
+            _notifier = Substitute.For<INotifier>();
             _eventDate = DateTime.Now;
             BucketNotifierInstance = new BucketNotifier();
         }
 
         [Test]
-        public void NotifyForAll_must_to_the_bucket_take_Event_and_make_a_notification()
+        public void NotifyForAll_should_do_notification_for_each_event_in_bucket()
         {
             //Arrange створюються змінні для того щоб виконати тестування
             var events = new List<IEvent>()
@@ -39,7 +43,7 @@ namespace DAMS.Core.Tests.EventReminder.Scheduler
             };
             var notificationBucket = new NotificationBucket(events);
 
-            //Act  виконуються определенние действия над системой
+            //Act  виконуються визначенні дії над системой
             BucketNotifierInstance.NotifyForAll(notificationBucket);
 
             //Assert очікуваний результат
