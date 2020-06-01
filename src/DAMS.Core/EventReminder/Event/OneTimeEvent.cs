@@ -3,9 +3,9 @@ using System;
 
 namespace DAMS.EventReminder.Event
 {
-    class OneTimeEvent : IEvent
+   public class OneTimeEvent : IEvent
     {
-        private INotifier Notifier;
+        public INotifier Notifier;
 
 
         public DateTime Date { get; set; }
