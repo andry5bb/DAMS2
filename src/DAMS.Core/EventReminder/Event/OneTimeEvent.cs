@@ -3,7 +3,7 @@ using System;
 
 namespace DAMS.EventReminder.Event
 {
-    class OneTimeEvent : IEvent
+   public class OneTimeEvent : IEvent
     {
         private INotifier Notifier;
 
