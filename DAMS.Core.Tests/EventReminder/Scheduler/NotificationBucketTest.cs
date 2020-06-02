@@ -34,7 +34,7 @@ namespace DAMS.Core.Tests.EventReminder.Scheduler
 
             var newEvent = new OneTimeEvent(_notifier, DateTime.Now.AddMinutes(10).AddSeconds(60));
 
-            //Act виконуються определенние действия над системою
+            //Act виконуються визначенні дії над системою
             NotificationBucketInstance.Add(newEvent);
 
             //Assert очікуваний результат
@@ -48,7 +48,7 @@ namespace DAMS.Core.Tests.EventReminder.Scheduler
         [Test]
         public void Remove_should_remove_old_event()
         {
-            //Arrang створюються змінні для того щоб виконати тестування
+            //Arrang
             var eventTest = new OneTimeEvent(_notifier, new DateTime(2000, 12, 10));
             var events = new List<IEvent>()
             {
@@ -58,10 +58,10 @@ namespace DAMS.Core.Tests.EventReminder.Scheduler
             };
             NotificationBucketInstance = new NotificationBucket(events);
 
-            //Act виконуються визначенні дії над системой
+            //Act
             NotificationBucketInstance.Remove(eventTest);
 
-            //Assert очікуваний результат
+            //Assert
             NotificationBucketInstance.Should().NotBeNull();
             NotificationBucketInstance.NextEvents.Should().HaveCount(2);
             NotificationBucketInstance.NextEvents.Should().NotContain(eventTest);

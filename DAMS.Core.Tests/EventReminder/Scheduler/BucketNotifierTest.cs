@@ -33,7 +33,7 @@ namespace DAMS.Core.Tests.EventReminder.Scheduler
         [Test]
         public void NotifyForAll_should_do_notification_for_each_event_in_bucket()
         {
-            //Arrange створюються змінні для того щоб виконати тестування
+            //Arrange
             var events = new List<IEvent>()
             {
                 Substitute.For<IEvent>(),
@@ -42,10 +42,10 @@ namespace DAMS.Core.Tests.EventReminder.Scheduler
             };
             var notificationBucket = new NotificationBucket(events);
 
-            //Act  виконуються визначенні дії над системой
+            //Act
             BucketNotifierInstance.NotifyForAll(notificationBucket);
 
-            //Assert очікуваний результат
+            //Assert
             events.ForEach(e => e.Received(1).Notify());
         }
     }
