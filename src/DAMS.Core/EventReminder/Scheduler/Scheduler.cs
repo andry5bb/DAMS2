@@ -8,7 +8,7 @@ namespace DAMS.EventReminder.Scheduler
         public NotificationBucket PrepareNotificationBucket(IEnumerable<IEvent> events)
         {
             var now = DateTime.Now;
-            var bucket = new NotificationBucket(events);
+            var bucket = new NotificationBucket();
 
             foreach (var currentEvent in events)
             {
