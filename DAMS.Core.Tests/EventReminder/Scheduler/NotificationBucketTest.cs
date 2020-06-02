@@ -13,7 +13,6 @@ namespace DAMS.Core.Tests.EventReminder.Scheduler
         /// <summary>
         /// System under test
         /// </summary>
-
         public NotificationBucket NotificationBucketInstance { get; set; }
 
         private INotifier _notifier;
@@ -35,7 +34,7 @@ namespace DAMS.Core.Tests.EventReminder.Scheduler
 
             var newEvent = new OneTimeEvent(_notifier, DateTime.Now.AddMinutes(10).AddSeconds(60));
 
-            //Act виконуються определенние действия над системой
+            //Act виконуються определенние действия над системою
             NotificationBucketInstance.Add(newEvent);
 
             //Assert очікуваний результат

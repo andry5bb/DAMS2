@@ -5,7 +5,7 @@ namespace DAMS.EventReminder.Event
 {
    public class OneTimeEvent : IEvent
     {
-        public INotifier Notifier;
+        private INotifier Notifier;
 
 
         public DateTime Date { get; set; }

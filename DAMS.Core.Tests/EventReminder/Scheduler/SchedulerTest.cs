@@ -15,7 +15,6 @@ namespace DAMS.Core.Tests.EventReminder.Scheduler
         /// <summary>
         /// System under test
         /// </summary>
-
         public SchedulerNS.Scheduler Scheduler { get; set; }
 
         private INotifier _notifier;

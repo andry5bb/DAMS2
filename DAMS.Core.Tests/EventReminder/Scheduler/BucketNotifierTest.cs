@@ -17,7 +17,6 @@ namespace DAMS.Core.Tests.EventReminder.Scheduler
         /// <summary>
         /// System under test
         /// </summary>
-
         public BucketNotifier BucketNotifierInstance { get; set; }
 
         private INotifier _notifier;
