@@ -12,15 +12,18 @@ namespace DAMS.Core.Tests.EventReminder.Scheduler
 {
     public class SchedulerTest
     {
-
+        /// <summary>
+        /// System under test
+        /// </summary>
         public SchedulerNS.Scheduler Scheduler { get; set; }
 
         private INotifier _notifier;
         private DateTime _eventDate;
+
         [SetUp]
         public void Setup()
         {
-            _notifier = Substitute.For<INotifier>();   // Here is mock
+            _notifier = Substitute.For<INotifier>();
             _eventDate = DateTime.Now;
 
             Scheduler = new SchedulerNS.Scheduler();
@@ -29,13 +32,13 @@ namespace DAMS.Core.Tests.EventReminder.Scheduler
         [Test]
         public void PrepareNotificationBucket_should_sort_all_events_and_add_needed_event_in_a_new_bucket()
         {
-
             // Arrange
+            var eventTest = new OneTimeEvent(_notifier, DateTime.Now.AddMinutes(3).AddSeconds(50)) { Name = "event1", NotifyBefore = new TimeSpan (0,0,0) };
             var events = new List<IEvent>()
             {
-                new OneTimeEvent (_notifier,DateTime.Now.AddMinutes(10).AddSeconds(60)),
-                new OneTimeEvent (_notifier,DateTime.Now.AddMinutes(15).AddSeconds(50)),
-                new OneTimeEvent (_notifier,DateTime.Now.AddMinutes(4).AddSeconds(40)),
+               eventTest,
+               new OneTimeEvent (_notifier, DateTime.Now.AddMinutes(15).AddSeconds(50)) { Name = "event2", NotifyBefore = new TimeSpan (0,0,0) },
+               new OneTimeEvent (_notifier, DateTime.Now.AddMinutes(3).AddSeconds(50)) { Name = "event3", NotifyBefore = new TimeSpan (0,0,0) },
             };
 
             //Act 
@@ -43,8 +46,8 @@ namespace DAMS.Core.Tests.EventReminder.Scheduler
 
             //Assert
             result.Should().NotBeNull();
-            result.NextEvents.Should().HaveCount(1);
+            result.NextEvents.Should().HaveCount(2);
+            result.NextEvents.Should().Contain(eventTest);
         }
-
     }
 }

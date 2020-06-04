@@ -3,6 +3,9 @@ using System;
 
 namespace DAMS.EventReminder.Event
 {
+    // TODO: Refactor: extract logic responsible for calculation of the next event date to private method.
+    //       Use this method wherever it could be used.
+
     public class PeriodEvent : IEvent
     {
         private INotifier Notifier;
@@ -37,7 +40,10 @@ namespace DAMS.EventReminder.Event
 
         public void Notify()
         {
-            UpdateStatus(Notifier.Notify());
+            var nextEventDate = GetNextEventDate();
+            var eventInfo = new EventInfo(Name, nextEventDate);
+            var notificationResult = Notifier.Notify(eventInfo);
+            UpdateStatus(notificationResult);
         }
 
         public void UpdateStatus(NotificationResult result)
@@ -120,6 +126,11 @@ namespace DAMS.EventReminder.Event
                 }
             }
             return NextDate;
+        }
+
+        private DateTime GetNextEventDate()
+        {
+            throw new NotImplementedException();
         }
     }
 }

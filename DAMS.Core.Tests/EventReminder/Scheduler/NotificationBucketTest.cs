@@ -10,72 +10,62 @@ namespace DAMS.Core.Tests.EventReminder.Scheduler
 {
     class NotificationBucketTest
     {
+        /// <summary>
+        /// System under test
+        /// </summary>
         public NotificationBucket NotificationBucketInstance { get; set; }
 
         private INotifier _notifier;
-        private DateTime _eventDate;
-        private IEnumerable<IEvent> events;
-
-        [SetUp]
-        public void Setup()
-        {
-           // _notifier = Substitute.For<INotifier>();   // Here is mock
-           // _eventDate = DateTime.Now;
-
-            NotificationBucketInstance = new NotificationBucket(events);
-        }
 
         #region Add()
 
         [Test]
-        public void Check_Method_Add_in_NotificationBucket ()
+        public void Add_should_add_new_event()
         {
             //Arrang створюються змінні для того щоб виконати тестування
-            var _events = new List<IEvent>()
+            var events = new List<IEvent>()
             {
                 new OneTimeEvent (_notifier, DateTime.Now.AddMinutes(10).AddSeconds(60)),
                 new OneTimeEvent (_notifier, DateTime.Now.AddMinutes(15).AddSeconds(50)),
                 new OneTimeEvent (_notifier, DateTime.Now.AddMinutes(4).AddSeconds(40)),
                 new OneTimeEvent (_notifier, DateTime.Now.AddMinutes(3).AddSeconds(40)),
             };
+            NotificationBucketInstance = new NotificationBucket(events);
 
-            //Act виконуються определенние действия над системой
-            foreach (var item in _events)
-            {
-               NotificationBucketInstance.Add(item);
-            }
-           
+            var newEvent = new OneTimeEvent(_notifier, DateTime.Now.AddMinutes(10).AddSeconds(60));
+
+            //Act виконуються визначенні дії над системою
+            NotificationBucketInstance.Add(newEvent);
+
             //Assert очікуваний результат
             NotificationBucketInstance.Should().NotBeNull();
-            NotificationBucketInstance.NextEvents.Should().HaveCount(4);
-
+            NotificationBucketInstance.NextEvents.Should().HaveCount(5);
+            NotificationBucketInstance.NextEvents.Should().Contain(events);
         }
-    
-    #endregion
-    #region Remove()
-    [Test]
-    public void Check_Method_Remove_in_NotificationBucket ()
-    {
-        //Arrang створюються змінні для того щоб виконати тестування
-        var _events = new List<IEvent>()
-            {
-                new OneTimeEvent (_notifier, DateTime.Now.AddMinutes(10).AddSeconds(60)),
-                new OneTimeEvent (_notifier, DateTime.Now.AddMinutes(15).AddSeconds(50)),
-                new OneTimeEvent (_notifier, DateTime.Now.AddMinutes(4).AddSeconds(40)),
-                new OneTimeEvent (_notifier, DateTime.Now.AddMinutes(3).AddSeconds(40)),
-            };
 
-        //Act виконуються определенние действия над системой
-        foreach (var item in _events)
+        #endregion
+        #region Remove()
+        [Test]
+        public void Remove_should_remove_old_event()
         {
-            NotificationBucketInstance.Remove(item);
+            //Arrang
+            var eventTest = new OneTimeEvent(_notifier, new DateTime(2000, 12, 10));
+            var events = new List<IEvent>()
+            {
+                eventTest,
+                new OneTimeEvent (_notifier, new DateTime(2000,12,10)),
+                new OneTimeEvent (_notifier, DateTime.Now.AddMinutes(15).AddSeconds(50)),
+            };
+            NotificationBucketInstance = new NotificationBucket(events);
+
+            //Act
+            NotificationBucketInstance.Remove(eventTest);
+
+            //Assert
+            NotificationBucketInstance.Should().NotBeNull();
+            NotificationBucketInstance.NextEvents.Should().HaveCount(2);
+            NotificationBucketInstance.NextEvents.Should().NotContain(eventTest);
         }
-
-        //Assert очікуваний результат
-        NotificationBucketInstance.Should().NotBeNull();
-        NotificationBucketInstance.NextEvents.Should().HaveCount(0);
-
     }
-}
     #endregion
 }

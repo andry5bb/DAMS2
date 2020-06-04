@@ -23,11 +23,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAMS.ConsoleApp", "DAMS.Con
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAMS.Core.Tests", "DAMS.Core.Tests\DAMS.Core.Tests.csproj", "{6D5503FB-6C40-4F31-89D2-43F009AAF625}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAMS.Telegram", "DAMS.Telegram\DAMS.Telegram.csproj", "{A6273E73-E170-4344-937F-9DC65DF03C4C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAMS.Telegram", "DAMS.Telegram\DAMS.Telegram.csproj", "{A6273E73-E170-4344-937F-9DC65DF03C4C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MotificationSystems", "MotificationSystems", "{DE7733FE-AA74-44FF-929B-280F3E85E045}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAMS.Email", "DAMS.Email\DAMS.Email.csproj", "{7F9793E1-BCC3-47D1-A624-CE9101597B5C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAMS.NotificationSystems.All", "DAMS.Email\DAMS.NotificationSystems.All.csproj", "{7F9793E1-BCC3-47D1-A624-CE9101597B5C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
