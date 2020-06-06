@@ -8,13 +8,15 @@ using System.Threading;
 using Telegram.Bot.Types.ReplyMarkups;
 using Telegram.Bot.Types;
 using System.Net;
+using RestSharp;
 
 namespace DAMS.Telegram
 {
-    public class MyMessage
+    public class TextMessenger
     {
+        static ITelegramBotClient client = new TelegramBotClient("1203508145:AAFYSqqz66zVYJ9xP5MU_kr0JwZDprIhiQE");
 
-        public void SendMyMessage(ITelegramBotClient client, string mytext)
+        public void SendMyMessage(string mytext)
         {
             client.OnMessage += BotClient_OnMessage;
             client.StartReceiving();
@@ -38,7 +40,7 @@ namespace DAMS.Telegram
                         await client.SendTextMessageAsync
                         (
                         chatId: e.Message.Chat,
-                        text: "name"+ DateTime.Now,
+                        text: mytext,
                         replyMarkup: keyboard
                         );
                     }
@@ -47,7 +49,7 @@ namespace DAMS.Telegram
                         await client.SendTextMessageAsync
                         (
                         chatId: e.Message.Chat,
-                        text: "There should be information about CustomEvent type",
+                        text: mytext,
                         replyMarkup: keyboard
                         );
                     }
@@ -55,31 +57,26 @@ namespace DAMS.Telegram
                     {
                         await client.SendTextMessageAsync
                             (chatId: e.Message.Chat,
-                            text: "There should be information about PeriodEvent type ",
+                            text: mytext,
                             replyMarkup: keyboard
                             );
-
-                    }
 
                     }
                     await client.SendTextMessageAsync
                             (chatId: e.Message.Chat,
-                            text:mytext,
+                            text: "Go!!!",
                             replyMarkup: keyboard
                             );
-
                 }
             }
-
-        
-        public void BotFirstWriteMessage(string text)
-        { 
-            WebRequest request = WebRequest.Create("https://api.telegram.org/bot1203508145:AAFYSqqz66zVYJ9xP5MU_kr0JwZDprIhiQE/sendMessage?chat_id=457253196&text=" + text);
-            request.GetResponse();
         }
-      
+        public void BotFirstWriteMessage(string chat_id, string text_message)
+        {
+            var client = new RestClient("https://api.telegram.org");
+            var request = new RestRequest("https://api.telegram.org/bot1203508145:AAFYSqqz66zVYJ9xP5MU_kr0JwZDprIhiQE/sendMessage?chat_id=" + chat_id + "&text=" + text_message);
+            client.Execute(request);
 
-       
+        }
 
     }
 }
