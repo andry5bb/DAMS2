@@ -6,7 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="ConfigFiels\" />
     <Folder Include="Viber\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EO.WebBrowser" Version="20.1.45" />
   </ItemGroup>
 
   <ItemGroup>
