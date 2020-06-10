@@ -2,18 +2,22 @@
 using DAMS.EventReminder.Notifier;
 using DAMS.Telegram;
 
-
 namespace DAMS.NotificationSystems.All.Telegram
 { 
     public class TelegramNotifier : INotifier
-    { 
+    { private string MessageContent(EventInfo eventInfo)
+        {
+            string message = eventInfo.EventName + "  " + eventInfo.EventDate;
+            return message;
+        }
         public NotificationResult Notify(EventInfo eventInfo)
         {
-            TextMessenger textMessange = new TextMessenger();
+            TextMessenger messenger = new TextMessenger();
             NotificationResult result = new NotificationResult();
+            
             try
-            { 
-                textMessange.SendMyMessage(eventInfo.EventName + "  " + eventInfo.EventDate);
+            {
+                messenger.SendMyMessage(MessageContent(eventInfo)); 
                 result.IsSuccess = true;
             }
             catch
@@ -28,7 +32,7 @@ namespace DAMS.NotificationSystems.All.Telegram
             NotificationResult result = new NotificationResult();
             try
             {
-                textMessange.BotFirstWriteMessage(chat_id, eventInfo.EventName + "  " + eventInfo.EventDate);
+                textMessange.PushMessage(chat_id, MessageContent(eventInfo));
 
                 result.IsSuccess = true;
             }
