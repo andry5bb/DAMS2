@@ -10,13 +10,14 @@ using Telegram.Bot.Types;
 using System.Net;
 using RestSharp;
 using DAMS.NotificationSystems.All;
+using System.Configuration;
 
 namespace DAMS.Telegram
 {
     public class TextMessenger
     {
-        static ITelegramBotClient client = new TelegramBotClient("1203508145:AAFYSqqz66zVYJ9xP5MU_kr0JwZDprIhiQE");
-        public void SendMyMessage(string mytext)
+        static ITelegramBotClient client = new TelegramBotClient(ConfigurationManager.AppSettings["TelegramBotToken"]);
+        public void SendMessage(string mytext)
         {
             client.OnMessage += BotClient_OnMessage;
             client.StartReceiving();
@@ -76,11 +77,9 @@ namespace DAMS.Telegram
         /// <param name="text_message">Notification text.</param>
         public void PushMessage(string chat_id, string text_message)
         {
-            var client = new RestClient("https://api.telegram.org");
-            var request = new RestRequest("https://api.telegram.org/bot1203508145:AAFYSqqz66zVYJ9xP5MU_kr0JwZDprIhiQE/sendMessage?chat_id=" + chat_id + "&text=" + text_message);
+            var client = new RestClient(ConfigurationManager.AppSettings["RestClient"]);
+            var request = new RestRequest(ConfigurationManager.AppSettings["Reguest"] + chat_id + "&text=" + text_message);
             client.Execute(request);
-
         }
-   
     }
 }
