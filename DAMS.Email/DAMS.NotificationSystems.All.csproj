@@ -6,7 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="ConfigFiles\" />
     <Folder Include="Viber\" />
   </ItemGroup>
 
