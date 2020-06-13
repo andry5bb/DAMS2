@@ -3,30 +3,43 @@ using DAMS.EventReminder;
 using DAMS.EventReminder.Notifier;
 using System.Net.Mail;
 using System.Configuration;
+using DAMS.Helpers;
+using System;
 
 namespace DAMS.NotificationSystems.All.Email
 {
     public class EmailNotifier : INotifier
     {
+
         public NotificationResult Notify(NotificationInfo eventInfo)
-        {            
-            var prepareSmtpClient = PrepareSmtpClient();
+        {
+            var regexEmail = new RegexValidator();
+            var smtpClient = PrepareSmtpClient();
+            var email = FormEmail(eventInfo);
+
             NotificationResult result = new NotificationResult();
             try
             {
-                prepareSmtpClient.Send(FormEmail(eventInfo));
-                result.IsSuccess = true;
+                if (regexEmail.Email(eventInfo.EmailRecipient) == true)
+                {
+                    smtpClient.Send(email);
+                    result.IsSuccess = true;
+                }
             }
             catch 
             {
-                result.Details = "Error";
+                if (regexEmail.Email(eventInfo.EmailRecipient) == false)
+                {
+                    result.Details = "Error";
+                    throw new ArgumentException(String.Format("{0} Invalid email input format ", eventInfo.EmailRecipient), "email");
+                }
             }
             return result; 
         }
 
         private MailMessage FormEmail(NotificationInfo eventInfo)
         {
-            string mailFrom = ConfigurationManager.AppSettings.Get("fromMailAddress");
+            string mailFrom = ConfigurationManager.AppSettings.Get("FromMailAddress");
             string from = ConfigurationManager.AppSettings.Get("NameAdmin");
             MailAddress fromMailAddress = new MailAddress(mailFrom, from);
             MailAddress toAddress = new MailAddress(eventInfo.EmailRecipient);
@@ -40,8 +53,8 @@ namespace DAMS.NotificationSystems.All.Email
         private SmtpClient PrepareSmtpClient()
         {
             string smtpHost = ConfigurationManager.AppSettings.Get("Host_smtp");
-            string login = ConfigurationManager.AppSettings.Get("login");
-            string password = ConfigurationManager.AppSettings.Get("password");
+            string login = ConfigurationManager.AppSettings.Get("Login");
+            string password = ConfigurationManager.AppSettings.Get("Password");
             var smtp = new SmtpClient
             {
                 Host = smtpHost,
