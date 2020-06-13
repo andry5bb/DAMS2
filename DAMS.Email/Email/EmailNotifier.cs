@@ -25,12 +25,11 @@ namespace DAMS.NotificationSystems.All.Email
                     result.IsSuccess = true;
                 }
             }
-            catch 
+            catch(Exception ex) 
             {
                 if (regexEmail.Email(eventInfo.EmailRecipient) == false)
                 {
-                    result.Details = "Error";
-                    throw new ArgumentException(String.Format("{0} Invalid email input format ", eventInfo.EmailRecipient), "email");
+                    result.Details = ex.Message;
                 }
             }
             return result; 
@@ -43,7 +42,7 @@ namespace DAMS.NotificationSystems.All.Email
             MailAddress fromMailAddress = new MailAddress(mailFrom, from);
             MailAddress toAddress = new MailAddress(eventInfo.EmailRecipient);
             MailMessage mailMessage = new MailMessage(fromMailAddress, toAddress);
-            mailMessage.Subject = "Нагадування про подію!";
+            mailMessage.Subject = eventInfo.EventName;
             mailMessage.Body = eventInfo.EventName + eventInfo.EventDate; 
             mailMessage.IsBodyHtml = true;
             return mailMessage;
