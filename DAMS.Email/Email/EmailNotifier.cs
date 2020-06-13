@@ -10,7 +10,6 @@ namespace DAMS.NotificationSystems.All.Email
 {
     public class EmailNotifier : INotifier
     {
-
         public NotificationResult Notify(NotificationInfo eventInfo)
         {
             var regexEmail = new RegexValidator();
