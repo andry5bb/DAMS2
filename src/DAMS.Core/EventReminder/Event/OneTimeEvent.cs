@@ -1,4 +1,5 @@
-﻿using DAMS.EventReminder.Notifier;
+﻿using Castle.Components.DictionaryAdapter;
+using DAMS.EventReminder.Notifier;
 using System;
 
 namespace DAMS.EventReminder.Event
@@ -11,7 +12,7 @@ namespace DAMS.EventReminder.Event
         public DateTime NextNotificationDate { get { return Date - NotifyBefore; } }
         public string Name { get; set; }
         public TimeSpan NotifyBefore { get; set; }
-
+        public int Id { get; set; }
         public EventStatus Status { get; set; }
 
 
@@ -22,7 +23,6 @@ namespace DAMS.EventReminder.Event
             Name = "My Event";
             NotifyBefore = new TimeSpan(0, 5, 0);
             Status = EventStatus.Active;
-
         }
         public OneTimeEvent(INotifier notifier, DateTime date, string name, TimeSpan time, EventStatus status)
         {
@@ -33,10 +33,13 @@ namespace DAMS.EventReminder.Event
             Status = status;
         }
 
+        public OneTimeEvent()
+        {
+        }
 
         public void Notify()
         {
-            var eventInfo = new NotificationInfo(Name, Date);
+            var eventInfo = new NotificationInfo(Name, Date,"");
             NotificationResult notificationResult = Notifier.Notify(eventInfo);
             UpdateStatus(notificationResult);
         }

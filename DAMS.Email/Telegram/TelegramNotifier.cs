@@ -6,7 +6,7 @@ namespace DAMS.NotificationSystems.All.Telegram
 {
     public class TelegramNotifier : INotifier
     {
-        private string GetMessageContent(EventInfo eventInfo)
+        private string GetMessageContent(NotificationInfo eventInfo)
         {
             string message = eventInfo.EventName + "  " + eventInfo.EventDate;
             return message;
@@ -19,7 +19,7 @@ namespace DAMS.NotificationSystems.All.Telegram
 
             try
             {
-                messenger.SendMessage(GetMessageContent(eventInfo));
+                messenger.SendMessage(GetMessageContent(notificationInfo));
                 result.IsSuccess = true;
             }
             catch
@@ -29,7 +29,7 @@ namespace DAMS.NotificationSystems.All.Telegram
             return result;
         }
 
-        public NotificationResult Notify(EventInfo eventInfo, string chat_id)
+        public NotificationResult Notify(NotificationInfo eventInfo, string chat_id)
         {
             TextMessenger textMessange = new TextMessenger();
             NotificationResult result = new NotificationResult();

@@ -1,42 +1,42 @@
-﻿using DAMS.EventReminder.Event;
+﻿using Castle.Components.DictionaryAdapter;
+using DAMS.EventReminder;
+using DAMS.EventReminder.Event;
 using DAMS.EventReminder.Notifier;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using DAMS.Models;
 
 namespace DAMS.EventReminder
 {
     // TODO: Refactor: extract logic responsible for calculation of the next event date to private method.
     //       Use this method wherever it could be used.
+    //[Table("Name table")]
 
     public class CustomEvent : IEvent
     {
-        private INotifier Notifier;
-
-        public IDictionary<DateTime, EventStatus> Dates { get; set; }
+        private INotifier notifier;
+       // private readonly DAMSDbContext dAMSDb;
+        public IEnumerable<CustomEventDate> Dates { get; set; }
         public DateTime NextNotificationDate
         {
             get
             {
-                foreach (KeyValuePair<DateTime, EventStatus> element in Dates)
-                {
-                    if (element.Value == EventStatus.Active)
-                    {
-                        return element.Key - NotifyBefore;
-                    }
-                }
-                return DateTime.MinValue;
+                DateTime nextNotification = new DateTime(); //db.MyEventsModels.Min(p => p.Date);
+                return nextNotification;
             }
         }
         public string Name { get; set; }
-        public TimeSpan NotifyBefore { get; set; }        
+        public TimeSpan NotifyBefore { get; set; }
         public EventStatus Status { get; set; }
 
 
-        public CustomEvent(INotifier notifier, IEnumerable<DateTime> dates)
+        public CustomEvent(INotifier notifier, IEnumerable<DateTime> dates) // зачем нам конструктори?
         {
-            Notifier = notifier;
-            Dates = dates.ToDictionary((current) => current, (current) => EventStatus.Active);
+            this.notifier = notifier;
+            Dates = (IEnumerable<CustomEventDate>)dates.ToDictionary((current) => current, (current) => EventStatus.Active);
             Name = "My Event";
             NotifyBefore = new TimeSpan(0, 5, 0);
             Status = EventStatus.Active;
@@ -44,8 +44,8 @@ namespace DAMS.EventReminder
 
         public CustomEvent(INotifier notifier, IEnumerable<DateTime> dates, string name, TimeSpan time, EventStatus status)
         {
-            Notifier = notifier;
-            Dates = dates.ToDictionary((current) => current, (current) => EventStatus.Active);
+            this.notifier = notifier;
+            Dates = (IEnumerable<CustomEventDate>)dates.ToDictionary((current) => current, (current) => EventStatus.Active);
             Name = name;
             NotifyBefore = time;
             Status = status;
@@ -55,19 +55,19 @@ namespace DAMS.EventReminder
         public void Notify()
         {
             // Remove following line after GetNextEventDate() will be implemented.
-            //DateTime nextEventDate = Dates.First(d => d.Value == EventStatus.Active).Key;
+            // DateTime nextEventDate = Dates.First(d => d.Value == EventStatus.Active).Key;
             DateTime nextEventDate = GetNextEventDate();
 
-            var eventInfo = new NotificationInfo(Name, nextEventDate);
-            NotificationResult notificationResult = Notifier.Notify(eventInfo);
+            var eventInfo = new NotificationInfo(Name, nextEventDate, "");
+            NotificationResult notificationResult = notifier.Notify(eventInfo);
             UpdateStatus(notificationResult);
         }
 
         public void UpdateStatus(NotificationResult result)
         {
-            foreach (KeyValuePair<DateTime, EventStatus> element in Dates)
+            foreach (IEnumerable<CustomEventDate> element in Dates)
             {
-                if (element.Value == EventStatus.Active)
+                if (element. == EventStatus.Active)
                 {
                     if (result.IsSuccess == true)
                     {
@@ -79,12 +79,12 @@ namespace DAMS.EventReminder
                     }
                     break;
                 }
+                //}
+            }
+
+            private DateTime GetNextEventDate()
+            {
+                throw new NotImplementedException();
             }
         }
-
-        private DateTime GetNextEventDate()
-        {
-            throw new NotImplementedException();
-        }
-    }
 }
